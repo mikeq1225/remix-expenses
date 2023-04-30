@@ -6,8 +6,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import type { V2_MetaFunction } from "@remix-run/node";
 import sharedStyles from "~/styles/shared.css";
+import type { V2_MetaFunction } from "@remix-run/node";
 
 export const meta: V2_MetaFunction = () => {
   return [{ title: `Q's Expenses App` }];

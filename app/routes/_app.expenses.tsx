@@ -1,9 +1,5 @@
 import { Outlet } from "@remix-run/react";
-import expensesStyles from "~/styles/expenses.css";
 import ExpensesList from "~/components/expenses/ExpensesList";
-export function links() {
-  return [{ rel: "stylesheet", href: expensesStyles }];
-}
 
 const DummyExpenses = [
   {
@@ -13,7 +9,7 @@ const DummyExpenses = [
     date: new Date().toISOString(),
   },
   {
-    id: "e1",
+    id: "e2",
     title: "Second Expense",
     amount: 16.99,
     date: new Date().toISOString(),
