@@ -1,14 +1,31 @@
 import ExpensesForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
 import { useNavigate } from "@remix-run/react";
-import type { LoaderArgs } from "@remix-run/node";
-import { getExpenseById } from "~/data/expenses.server";
-import { json } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { deleteExpense, updateExpense } from "~/data/expenses.server";
+import { validateExpenseInput } from "~/data/validation.server";
+import type { ActionArgs } from "@remix-run/node";
 
-export async function loader({ params }: LoaderArgs) {
+export async function action({ params, request }: ActionArgs) {
   const expenseId = params.id;
-  const expense = await getExpenseById(expenseId);
-  return json(expense);
+  const method = request.method;
+
+  if (method === "PATCH") {
+    const formData = await request.formData();
+    const expenseData = Object.fromEntries(formData);
+
+    try {
+      validateExpenseInput(expenseData);
+    } catch (error) {
+      return error;
+    }
+    await updateExpense(expenseId, expenseData);
+    return redirect("/expenses");
+  } else if (method === "DELETE") {
+    await deleteExpense(expenseId);
+    return { deletedId: expenseId };
+  }
+  return null;
 }
 
 export default function UpdateExpense() {
