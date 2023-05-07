@@ -7,11 +7,15 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { getExpenses } from "~/data/expenses.server";
+import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import ErrorComponent from "~/components/util/ErrorComponent";
+import { requireUserSession } from "~/data/auth.server";
 
-export async function loader() {
-  const expenses = await getExpenses();
+export async function loader({ request }: LoaderArgs) {
+  const userId = await requireUserSession(request);
+
+  const expenses = await getExpenses(userId);
 
   if (!expenses || expenses.length === 0) {
     throw json(

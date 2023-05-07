@@ -5,8 +5,10 @@ import { addExpense } from "~/data/expenses.server";
 import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { validateExpenseInput } from "~/data/validation.server";
+import { requireUserSession } from "~/data/auth.server";
 
 export async function action({ request }: ActionArgs) {
+  const userId = await requireUserSession(request);
   const formData = await request.formData();
   const expenseData = Object.fromEntries(formData);
 
@@ -16,7 +18,7 @@ export async function action({ request }: ActionArgs) {
     return error;
   }
 
-  await addExpense(expenseData);
+  await addExpense(expenseData, userId);
 
   return redirect("/expenses");
 }
