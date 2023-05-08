@@ -7,10 +7,14 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { getExpenses } from "~/data/expenses.server";
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import ErrorComponent from "~/components/util/ErrorComponent";
 import { requireUserSession } from "~/data/auth.server";
+
+export const meta: V2_MetaFunction = () => {
+  return [{ title: `Expenses Analysis` }];
+};
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await requireUserSession(request);

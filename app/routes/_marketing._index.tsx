@@ -1,10 +1,5 @@
-import type { V2_MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { FaArrowRight, FaDollarSign, FaChartBar } from "react-icons/fa";
-
-export const meta: V2_MetaFunction = () => {
-  return [{ title: "New Remix App" }];
-};
 
 export default function Index() {
   return (

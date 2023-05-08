@@ -20,7 +20,10 @@ const PRICING_PLANS = [
 ];
 
 export const meta: V2_MetaFunction = () => {
-  return [{ title: `Pricing` }];
+  return [
+    { title: `Pricing` },
+    { name: "description", content: "See our complete pricing plans" },
+  ];
 };
 
 export default function PricingPage() {

@@ -4,7 +4,16 @@ import { useNavigate } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import { deleteExpense, updateExpense } from "~/data/expenses.server";
 import { validateExpenseInput } from "~/data/validation.server";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionArgs, V2_MetaFunction } from "@remix-run/node";
+
+export const meta: V2_MetaFunction = ({ params, matches }) => {
+  const { id } = params;
+  // come back to figure out matches type
+  return [
+    { title: `Expense: ${id}` },
+    { name: "description", content: `Update details of expense ${id}` },
+  ];
+};
 
 export async function action({ params, request }: ActionArgs) {
   const expenseId = params.id;
